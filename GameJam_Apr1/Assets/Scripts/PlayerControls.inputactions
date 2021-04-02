@@ -1,0 +1,33 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "ControlMap",
+            "id": "f4646fbb-314c-4e26-98b7-32de10b41e50",
+            "actions": [
+                {
+                    "name": "W_Press",
+                    "type": "Button",
+                    "id": "56d655b6-d3a9-4355-8c8a-d677b8fb24d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "75692c84-3918-46c2-bb01-dfa363a7b5db",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "W_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
