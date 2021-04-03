@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class PlayerActions : MonoBehaviour
     public Sprite[] spriteArray;
     SpriteRenderer sr;
 
+    public bool isDead = false;
+
 
     private void Start()
     {
@@ -38,70 +41,78 @@ public class PlayerActions : MonoBehaviour
 
     private void Update()
     {
-        //PICTURE 
-        //nothing
-        if (!leftThruster && !forwardThruster && !rightThruster)
-            sr.sprite = spriteArray[0];
-        //left only
-        else if ((leftThruster && !forwardThruster && !rightThruster))
-            sr.sprite = spriteArray[1];
-        //middle only
-        else if (!leftThruster && forwardThruster && !rightThruster)
-            sr.sprite = spriteArray[2];
-        //right only
-        else if (!leftThruster && !forwardThruster && rightThruster)
-            sr.sprite = spriteArray[3];
-        //left middle only
-        else if (leftThruster && forwardThruster && !rightThruster)
-            sr.sprite = spriteArray[4];
-        //middle right only
-        else if (!leftThruster && forwardThruster && rightThruster)
-            sr.sprite = spriteArray[5];
-        //left right
-        else if (leftThruster && !forwardThruster && rightThruster)
-            sr.sprite = spriteArray[6];
-        //all
-        else if (leftThruster && forwardThruster && rightThruster)
-            sr.sprite = spriteArray[7];
+        if (!isDead)
+        {
+            //PICTURE 
+            //nothing
+            if (!leftThruster && !forwardThruster && !rightThruster)
+                sr.sprite = spriteArray[0];
+            //left only
+            else if ((leftThruster && !forwardThruster && !rightThruster))
+                sr.sprite = spriteArray[1];
+            //middle only
+            else if (!leftThruster && forwardThruster && !rightThruster)
+                sr.sprite = spriteArray[2];
+            //right only
+            else if (!leftThruster && !forwardThruster && rightThruster)
+                sr.sprite = spriteArray[3];
+            //left middle only
+            else if (leftThruster && forwardThruster && !rightThruster)
+                sr.sprite = spriteArray[4];
+            //middle right only
+            else if (!leftThruster && forwardThruster && rightThruster)
+                sr.sprite = spriteArray[5];
+            //left right
+            else if (leftThruster && !forwardThruster && rightThruster)
+                sr.sprite = spriteArray[6];
+            //all
+            else if (leftThruster && forwardThruster && rightThruster)
+                sr.sprite = spriteArray[7];
+        }
+
+        else sr.sprite = spriteArray[8];
     }
 
     private void FixedUpdate()
     {
-        //Movement / Rotation Logic 
-        if (leftThruster && rightThruster)
+        if (!isDead)
         {
-            //change rotation
-
-            prb2d.MoveRotation(prb2d.rotation +
-                bothRotationSpeed * Time.fixedDeltaTime);
-            prb2d.angularVelocity = bothDragSpeed;
-        }
-        else if (leftThruster)
-        {
-            //change rotation
-
-            prb2d.MoveRotation(prb2d.rotation +
-                leftRotationSpeed * Time.fixedDeltaTime);
-            prb2d.angularVelocity = leftDragSpeed;
-
-        }
-        else if (rightThruster)
-        {
-            //change rotation
-            prb2d.MoveRotation(prb2d.rotation +
-                rightRotationSpeed * Time.fixedDeltaTime);
-            prb2d.angularVelocity = rightDragSpeed;
-        }
-        if (forwardThruster)
-        {
-            //add force
-            prb2d.AddForce(transform.up * forceApplied);
-            //Debug.Log("Normalized: " + prb2d.velocity.normalized);
-            //float clampedVelocity = Mathf.Clamp(prb2d.velocity, 1f, 5f);
-            if (prb2d.velocity.magnitude > MaxSpeed)
+            //Movement / Rotation Logic 
+            if (leftThruster && rightThruster)
             {
-                float pushBack = prb2d.velocity.magnitude - MaxSpeed;
-                prb2d.AddForce(-transform.up * forceApplied * pushBack);
+                //change rotation
+
+                prb2d.MoveRotation(prb2d.rotation +
+                    bothRotationSpeed * Time.fixedDeltaTime);
+                prb2d.angularVelocity = bothDragSpeed;
+            }
+            else if (leftThruster)
+            {
+                //change rotation
+
+                prb2d.MoveRotation(prb2d.rotation +
+                    leftRotationSpeed * Time.fixedDeltaTime);
+                prb2d.angularVelocity = leftDragSpeed;
+
+            }
+            else if (rightThruster)
+            {
+                //change rotation
+                prb2d.MoveRotation(prb2d.rotation +
+                    rightRotationSpeed * Time.fixedDeltaTime);
+                prb2d.angularVelocity = rightDragSpeed;
+            }
+            if (forwardThruster)
+            {
+                //add force
+                prb2d.AddForce(transform.up * forceApplied);
+                //Debug.Log("Normalized: " + prb2d.velocity.normalized);
+                //float clampedVelocity = Mathf.Clamp(prb2d.velocity, 1f, 5f);
+                if (prb2d.velocity.magnitude > MaxSpeed)
+                {
+                    float pushBack = prb2d.velocity.magnitude - MaxSpeed;
+                    prb2d.AddForce(-transform.up * forceApplied * pushBack);
+                }
             }
         }
     }
@@ -141,6 +152,9 @@ public class PlayerActions : MonoBehaviour
     //??
     private void OnSpace_Press()
     {
-
+        if (isDead)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
