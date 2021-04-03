@@ -29,6 +29,7 @@ public class PlayerActions : MonoBehaviour
     SpriteRenderer sr;
 
     public bool isDead = false;
+    public bool win = false;
 
 
     private void Start()
@@ -108,11 +109,11 @@ public class PlayerActions : MonoBehaviour
                 prb2d.AddForce(transform.up * forceApplied);
                 //Debug.Log("Normalized: " + prb2d.velocity.normalized);
                 //float clampedVelocity = Mathf.Clamp(prb2d.velocity, 1f, 5f);
-                if (prb2d.velocity.magnitude > MaxSpeed)
-                {
-                    float pushBack = prb2d.velocity.magnitude - MaxSpeed;
-                    prb2d.AddForce(-transform.up * forceApplied * pushBack);
-                }
+                //if (prb2d.velocity.magnitude > MaxSpeed)
+                //{
+                //    float pushBack = prb2d.velocity.magnitude - MaxSpeed;
+                //    prb2d.AddForce(-transform.up * forceApplied * pushBack);
+                //}
             }
         }
     }

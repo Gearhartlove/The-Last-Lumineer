@@ -9,7 +9,6 @@ public class DestroyShip : MonoBehaviour
     PlayerActions pa;
     [SerializeField] GameObject BlackBackground;
     [SerializeField] GameObject AstColUI;
-    [SerializeField] GameObject Button;
 
     private void Start()
     {
